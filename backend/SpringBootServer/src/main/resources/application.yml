@@ -1,0 +1,38 @@
+spring:
+    application:
+        name: spring-boot-server
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+        password: 1234
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: none
+
+server:
+    port: 8080
+
+logging:
+    level:
+        root: warn
+
+springdoc:
+    swagger-ui:
+        path: /swagger-ui.html
+    api-docs:
+        path: /api-docs
+
+jwt:
+    secret: 8eaff7b2a4eb83db0df94b7bc89bf568119277ded1474f5a378c93cc25b0ad59
+    expiration: 86400000
+#
+#eureka:
+#    client:
+#        serviceUrl:
+#            defaultZone: http://localhost:8761/eureka/
+#        register-with-eureka: true
+#        fetch-registry: true
+#    instance:
+#        instance-id : ${spring.application.name}:${random.value}

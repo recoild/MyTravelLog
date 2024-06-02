@@ -1,0 +1,3 @@
+FROM openjdk:17
+COPY target/spring-boot-server.jar /app/spring-boot-server.jar
+ENTRYPOINT ["java", "-jar", "/app/spring-boot-server.jar"]
