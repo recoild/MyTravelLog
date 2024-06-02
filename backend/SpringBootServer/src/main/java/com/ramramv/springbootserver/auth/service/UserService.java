@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.user.service;
+package com.ramramv.springbootserver.auth.service;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ramramv.springbootserver.user.entity.Role;
-import com.ramramv.springbootserver.user.entity.User;
-import com.ramramv.springbootserver.user.jpa.UserRepository;
+import com.ramramv.springbootserver.auth.entity.Role;
+import com.ramramv.springbootserver.auth.entity.User;
+import com.ramramv.springbootserver.auth.jpa.UserRepository;
 import com.ramramv.userservice.user.entity.QUser;
 
 import lombok.RequiredArgsConstructor;

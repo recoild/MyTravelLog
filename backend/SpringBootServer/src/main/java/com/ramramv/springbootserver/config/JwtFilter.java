@@ -6,10 +6,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.ramramv.springbootserver.user.dto.CustomUserDetailsDto;
-import com.ramramv.springbootserver.user.entity.Role;
-import com.ramramv.springbootserver.user.entity.User;
-import com.ramramv.springbootserver.user.jwt.JwtUtil;
+import com.ramramv.springbootserver.auth.dto.CustomUserDetailsDto;
+import com.ramramv.springbootserver.auth.entity.Role;
+import com.ramramv.springbootserver.auth.entity.User;
+import com.ramramv.springbootserver.auth.jwt.JwtUtil;
 
 import org.springframework.security.core.Authentication;
 

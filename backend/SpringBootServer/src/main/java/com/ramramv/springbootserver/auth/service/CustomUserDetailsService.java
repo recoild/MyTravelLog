@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.user.service;
+package com.ramramv.springbootserver.auth.service;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ramramv.springbootserver.user.dto.CustomUserDetailsDto;
-import com.ramramv.springbootserver.user.entity.User;
-import com.ramramv.springbootserver.user.jpa.UserRepository;
+import com.ramramv.springbootserver.auth.dto.CustomUserDetailsDto;
+import com.ramramv.springbootserver.auth.entity.User;
+import com.ramramv.springbootserver.auth.jpa.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

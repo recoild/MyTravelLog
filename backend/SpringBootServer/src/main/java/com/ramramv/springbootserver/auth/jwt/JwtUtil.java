@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.user.jwt;
+package com.ramramv.springbootserver.auth.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

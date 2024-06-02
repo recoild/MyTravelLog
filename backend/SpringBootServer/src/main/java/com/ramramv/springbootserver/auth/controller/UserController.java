@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.user.controller;
+package com.ramramv.springbootserver.auth.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ramramv.springbootserver.user.dto.UserDto;
-import com.ramramv.springbootserver.user.entity.User;
-import com.ramramv.springbootserver.user.service.UserService;
+import com.ramramv.springbootserver.auth.dto.UserDto;
+import com.ramramv.springbootserver.auth.entity.User;
+import com.ramramv.springbootserver.auth.service.UserService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;

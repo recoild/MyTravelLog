@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.user.entity;
+package com.ramramv.springbootserver.auth.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

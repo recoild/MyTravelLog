@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.user.dto;
+package com.ramramv.springbootserver.auth.dto;
 
 import lombok.Data;
 

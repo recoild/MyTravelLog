@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.user.controller;
+package com.ramramv.springbootserver.auth.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

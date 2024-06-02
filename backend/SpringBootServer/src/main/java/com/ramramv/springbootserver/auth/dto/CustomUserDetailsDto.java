@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.user.dto;
+package com.ramramv.springbootserver.auth.dto;
 
 import java.util.Collection;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.ramramv.springbootserver.user.entity.User;
+import com.ramramv.springbootserver.auth.entity.User;
 
 public class CustomUserDetailsDto implements UserDetails {
     private final User user;
