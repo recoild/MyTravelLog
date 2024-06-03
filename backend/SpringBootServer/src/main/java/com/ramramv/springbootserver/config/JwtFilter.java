@@ -11,15 +11,11 @@ import com.ramramv.springbootserver.auth.entity.Role;
 import com.ramramv.springbootserver.auth.entity.User;
 import com.ramramv.springbootserver.auth.jwt.JwtUtil;
 
-import org.springframework.security.core.Authentication;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
 
