@@ -1,4 +1,4 @@
-package com.ramramv.userservice;
+package com.ramramv.springbootserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @AutoConfigureMockMvc
-class UserServiceApplicationTests {
+class SpringBootServerApplicationTests {
 	// private final MockMvc mockMvc;
 
 	@Test

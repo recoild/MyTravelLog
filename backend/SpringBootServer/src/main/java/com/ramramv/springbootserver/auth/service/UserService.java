@@ -9,7 +9,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ramramv.springbootserver.auth.entity.Role;
 import com.ramramv.springbootserver.auth.entity.User;
 import com.ramramv.springbootserver.auth.jpa.UserRepository;
-import com.ramramv.userservice.user.entity.QUser;
+import com.ramramv.springbootserver.auth.entity.QUser;
 
 import lombok.RequiredArgsConstructor;
 
