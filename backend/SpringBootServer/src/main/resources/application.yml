@@ -7,10 +7,22 @@ spring:
         username: postgres
         password: 1234
     jpa:
+        properties:
+            hibernate:
+                format-sql: true
         show-sql: true
         hibernate:
-            ddl-auto: none
-
+            ddl-auto: create
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        client-id: ${GOOGLE_CLIENT_ID}
+                        client-secret: ${GOOGLE_SECRET}
+                        scope:
+                            - profile
+                            - email
 server:
     port: 8080
 
@@ -26,7 +38,9 @@ springdoc:
 
 jwt:
     secret: 8eaff7b2a4eb83db0df94b7bc89bf568119277ded1474f5a378c93cc25b0ad59
-    expiration: 86400000
+    expiration: 5000
+    refresh-token:
+        expiration: 86400000
 #
 #eureka:
 #    client:

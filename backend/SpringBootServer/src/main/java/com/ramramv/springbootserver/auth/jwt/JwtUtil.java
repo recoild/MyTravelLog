@@ -21,13 +21,16 @@ import java.util.stream.Collectors;
 public class JwtUtil {
     private final SecretKey key;
     private final long jwtExpirationInMs;
+    private final long jwtRefreshExpirationInMs;
 
     public JwtUtil(@Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") long jwtExpirationInMs) {
+            @Value("${jwt.expiration}") long jwtExpirationInMs,
+            @Value("${jwt.refresh-token.expiration}") long jwtRefreshExpirationInMs) {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
 
         this.jwtExpirationInMs = jwtExpirationInMs;
+        this.jwtRefreshExpirationInMs = jwtRefreshExpirationInMs;
     }
 
     // JWT 토큰 생성 메서드
@@ -41,6 +44,26 @@ public class JwtUtil {
 
         // Access Token 생성
         Date expiryDate = new Date(now + jwtExpirationInMs);
+        return Jwts.builder()
+                .subject(authentication.getName())
+                .claim("auth", authorities)
+                .issuedAt(new Date(now))
+                .expiration(expiryDate)
+                .signWith(key, Jwts.SIG.HS256)
+                .compact();
+    }
+
+    // Refresh Token 생성 메서드
+    public String generateRefreshToken(Authentication authentication) {
+        // 권한 정보 추출
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        long now = (new Date()).getTime();
+
+        // Refresh Token 생성
+        Date expiryDate = new Date(now + jwtRefreshExpirationInMs);
         return Jwts.builder()
                 .subject(authentication.getName())
                 .claim("auth", authorities)
