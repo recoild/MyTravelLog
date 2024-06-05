@@ -1,7 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import ToggleTheme from "@/components/ui/ToggleTheme";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+// import { SignInButton, SignOutButton } from "@/components/index/SignInButton";
+import { SignInButtonServer } from "./SignInButtonServer";
 
 export default function Header() {
     return (
@@ -21,7 +23,9 @@ export default function Header() {
                 </div>
 
                 <div className="flex gap-2">
-                    <Button>로그인</Button>
+                    {/* <SignInButton></SignInButton>
+                    <SignOutButton></SignOutButton> */}
+                    <SignInButtonServer />
                     <ToggleTheme />
                 </div>
             </div>

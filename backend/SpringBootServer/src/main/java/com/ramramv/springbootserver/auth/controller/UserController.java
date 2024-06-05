@@ -27,8 +27,7 @@ public class UserController {
         return modelMapper.map(savedUser, UserDto.class);
     }
 
-    @GetMapping("/hellowlrld")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/admin")
     public String getMethodName() {
         return new String("admin page");
     }

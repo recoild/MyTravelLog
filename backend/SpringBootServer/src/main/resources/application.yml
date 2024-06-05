@@ -41,12 +41,3 @@ jwt:
     expiration: 5000
     refresh-token:
         expiration: 86400000
-#
-#eureka:
-#    client:
-#        serviceUrl:
-#            defaultZone: http://localhost:8761/eureka/
-#        register-with-eureka: true
-#        fetch-registry: true
-#    instance:
-#        instance-id : ${spring.application.name}:${random.value}

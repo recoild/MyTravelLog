@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 // import { CustomProvider } from "@/components/CustomProvider"; //초기 로딩 성능 저하 이슈로 주석 처리
+import AuthProvider from "./AuthProvider";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -21,22 +22,24 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="ko" suppressHydrationWarning>
-            <body
-                className={cn(
-                    "min-h-screen bg-background font-sans antialiased",
-                    fontSans.variable
-                )}
-            >
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
+        <AuthProvider>
+            <html lang="ko" suppressHydrationWarning>
+                <body
+                    className={cn(
+                        "min-h-screen bg-background font-sans antialiased",
+                        fontSans.variable
+                    )}
                 >
-                    {children}
-                </ThemeProvider>
-            </body>
-        </html>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        {children}
+                    </ThemeProvider>
+                </body>
+            </html>
+        </AuthProvider>
     );
 }
