@@ -55,7 +55,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/", "/oauth2/**", "/login/oauth2/code/**").permitAll()
+                // .requestMatchers("/", "/oauth2/**", "/login/oauth2/code/**").permitAll()
                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtFilter, AuthenticationFilter.class);

@@ -46,10 +46,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         System.out.println(authResult.getPrincipal());
 
         // JWT 토큰 생성
-        String token = jwtUtil.generateToken(authResult);
+        // String token = jwtUtil.generateToken(authResult);
 
         // 헤더에 JWT 토큰을 담아서 응답
-        response.addHeader("Authorization", "Bearer " + token);
+        // response.addHeader("Authorization", "Bearer " + token);
     }
 
     @Override
