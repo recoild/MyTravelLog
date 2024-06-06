@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.config;
+package com.ramramv.springbootserver.auth.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,22 +20,20 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.ramramv.springbootserver.auth.jwt.JwtUtil;
-import com.ramramv.springbootserver.oauth.service.OAuth2UserService;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
     // AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
+    private final JwtFilter jwtFilter;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
-    private final OAuth2UserService oAuth2UserService;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) {
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil,
+            JwtFilter jwtFilter) {
         this.authenticationConfiguration = authenticationConfiguration;
         this.jwtUtil = jwtUtil;
-        this.oAuth2UserService = new OAuth2UserService();
+        this.jwtFilter = jwtFilter;
     }
 
     // AuthenticationManager Bean 등록
@@ -55,16 +53,12 @@ public class SecurityConfig {
                 .headers(c -> c.frameOptions(FrameOptionsConfig::disable).disable())
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.oauth2Login(oauth -> oauth.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
-                .userService(oAuth2UserService))
-                .defaultSuccessUrl("/"));
-
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/", "/oauth2/**", "/login/oauth2/code/**").permitAll()
                 .anyRequest().authenticated());
 
-        // http.addFilterBefore(new JwtFilter(jwtUtil), AuthenticationFilter.class);
+        http.addFilterBefore(jwtFilter, AuthenticationFilter.class);
 
         // http.addFilterAt(new AuthenticationFilter(
         // authenticationManager(authenticationConfiguration), jwtUtil),

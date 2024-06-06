@@ -37,7 +37,4 @@ springdoc:
         path: /api-docs
 
 jwt:
-    secret: 8eaff7b2a4eb83db0df94b7bc89bf568119277ded1474f5a378c93cc25b0ad59
-    expiration: 5000
-    refresh-token:
-        expiration: 86400000
+    secret: a1518107a1f9d884c36db9072541b16b55489a9dd1d5744d5075ac4afd3d2224

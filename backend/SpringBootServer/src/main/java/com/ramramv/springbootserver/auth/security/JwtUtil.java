@@ -1,4 +1,4 @@
-package com.ramramv.springbootserver.auth.jwt;
+package com.ramramv.springbootserver.auth.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -87,6 +88,18 @@ public class JwtUtil {
             log.info("JWT claims string is empty.", e);
         }
         return false;
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        final String username = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload()
+                .getSubject();
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    private boolean isTokenExpired(String token) {
+        final Date expiration = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload()
+                .getExpiration();
+        return expiration.before(new Date());
     }
 
     public String getUsername(String token) {
