@@ -55,7 +55,7 @@ public class SecurityConfig {
 
         http.oauth2Login(c -> {
             // c.loginPage("/login");
-            c.defaultSuccessUrl("http://localhost:1000/", true);
+            // c.defaultSuccessUrl("http://localhost:1000/", true);
         });
 
         http.authorizeHttpRequests((auth) -> auth
