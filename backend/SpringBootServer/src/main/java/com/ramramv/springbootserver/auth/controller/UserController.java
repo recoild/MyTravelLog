@@ -32,6 +32,11 @@ public class UserController {
         return new String("admin page");
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return new String("Test");
+    }
+
     @GetMapping("/")
     public String mainP() {
 

@@ -51,14 +51,19 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(c -> c.logoutSuccessUrl("/"))
                 .headers(c -> c.frameOptions(FrameOptionsConfig::disable).disable())
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+
+        http.oauth2Login(c -> {
+            // c.loginPage("/login");
+            c.defaultSuccessUrl("http://localhost:1000/", true);
+        });
 
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/", "/oauth2/**", "/login/oauth2/code/**").permitAll()
+                .requestMatchers("/", "/oauth2/**", "/login/oauth2/code/**", "/test").permitAll()
                 .anyRequest().authenticated());
 
-        http.addFilterBefore(jwtFilter, AuthenticationFilter.class);
+        // http.addFilterBefore(jwtFilter, AuthenticationFilter.class);
 
         // http.addFilterAt(new AuthenticationFilter(
         // authenticationManager(authenticationConfiguration), jwtUtil),
