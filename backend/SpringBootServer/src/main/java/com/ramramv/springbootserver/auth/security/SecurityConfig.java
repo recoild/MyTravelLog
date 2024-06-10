@@ -3,8 +3,8 @@ package com.ramramv.springbootserver.auth.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,31 +15,21 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.ramramv.springbootserver.auth.service.OAuth2UserService;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    // AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
-    private final JwtFilter jwtFilter;
-    private final AuthenticationConfiguration authenticationConfiguration;
-    private final JwtUtil jwtUtil;
+    private final OAuth2UserService oAuth2UserService;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil,
-            JwtFilter jwtFilter) {
-        this.authenticationConfiguration = authenticationConfiguration;
-        this.jwtUtil = jwtUtil;
-        this.jwtFilter = jwtFilter;
-    }
-
-    // AuthenticationManager Bean 등록
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+    public SecurityConfig(OAuth2UserService oAuth2UserService) {
+        this.oAuth2UserService = oAuth2UserService;
     }
 
     @Bean
@@ -50,24 +40,19 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(c -> c.logoutSuccessUrl("/"))
-                .headers(c -> c.frameOptions(FrameOptionsConfig::disable).disable())
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+                .headers(c -> c.frameOptions(FrameOptionsConfig::disable).disable());
+        // .sessionManagement(c ->
+        // c.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         http.oauth2Login(c -> {
-            // c.loginPage("/login");
-            // c.defaultSuccessUrl("http://localhost:1000/", true);
+            c.loginPage("/");
+            c.userInfoEndpoint(userInfo -> userInfo
+                    .userService(oAuth2UserService));
         });
 
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/", "/oauth2/**", "/login/oauth2/code/**", "/test").permitAll()
+                .requestMatchers("/", "/login**", "/error").permitAll()
                 .anyRequest().authenticated());
-
-        // http.addFilterBefore(jwtFilter, AuthenticationFilter.class);
-
-        // http.addFilterAt(new AuthenticationFilter(
-        // authenticationManager(authenticationConfiguration), jwtUtil),
-        // UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -80,7 +65,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("http://localhost:1000");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);

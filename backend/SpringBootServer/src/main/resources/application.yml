@@ -3,7 +3,7 @@ spring:
         name: spring-boot-server
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/postgres?currentSchema=auth
+        url: jdbc:postgresql://localhost:5432/postgres?currentSchema=myschema
         username: postgres
         password: 1234
     jpa:
@@ -51,6 +51,3 @@ springdoc:
         path: /swagger-ui.html
     api-docs:
         path: /api-docs
-
-jwt:
-    secret: a1518107a1f9d884c36db9072541b16b55489a9dd1d5744d5075ac4afd3d2224
