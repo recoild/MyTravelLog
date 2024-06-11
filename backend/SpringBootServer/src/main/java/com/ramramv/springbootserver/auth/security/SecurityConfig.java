@@ -48,6 +48,7 @@ public class SecurityConfig {
             c.loginPage("/");
             c.userInfoEndpoint(userInfo -> userInfo
                     .userService(oAuth2UserService));
+            c.defaultSuccessUrl("/home", true);
         });
 
         http.authorizeHttpRequests((auth) -> auth

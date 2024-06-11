@@ -8,26 +8,22 @@ import LoginButton from "./LoginButton";
 
 export default function Header() {
     return (
-        <nav className=" mx-auto max-w-7xl sm:px-12">
+        <nav className=" mx-auto max-w-7xl sm:px-12 mt-6">
             <div className="flex items-center  justify-between">
                 <div className="flex items-center gap-1">
                     <Image
-                        src="/logo512.png"
+                        src="/logo.png"
                         alt="Logo"
                         width={100}
                         height={24}
                         priority
                     />
                     <h1 className="hidden sm:block text-xl sm:text-2xl font-bold">
-                        트래블 로그
+                        {process.env.PRODUCT_NAME}
                     </h1>
                 </div>
 
                 <div className="flex gap-2">
-                    {/* <SignInButton></SignInButton>
-                    <SignOutButton></SignOutButton> */}
-                    {/* <SignInButtonServer /> */}
-                    <LoginButton />
                     <ToggleTheme />
                 </div>
             </div>
