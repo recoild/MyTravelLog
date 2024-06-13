@@ -13,6 +13,7 @@ async function fetchSessionInfo(sessionValue: string) {
         headers: {
             Cookie: `SESSION=${sessionValue}`,
         },
+        cache: "no-store",
     });
 
     if (!res.ok) {
