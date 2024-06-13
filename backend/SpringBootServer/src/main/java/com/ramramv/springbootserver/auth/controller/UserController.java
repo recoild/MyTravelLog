@@ -1,34 +1,37 @@
 package com.ramramv.springbootserver.auth.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramramv.springbootserver.auth.dto.UserInfoResponse;
 import com.ramramv.springbootserver.auth.entity.User;
 import com.ramramv.springbootserver.auth.service.UserService;
 
-import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 public class UserController {
+    private final UserService userService;
 
-    @GetMapping("/test")
-    public String test() {
-        return new String("Test");
-    }
-
-    @GetMapping("/")
-    public String mainP() {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        return "Main Controller : " + name + " role :"
-                + SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+    @GetMapping("/session")
+    public ResponseEntity<UserInfoResponse> getSession(Authentication authentication) {
+        if (authentication.isAuthenticated()) {
+            UserInfoResponse userInfoResponse = new UserInfoResponse();
+            if (authentication.getPrincipal() instanceof OAuth2User oauthUser) {
+                String email = oauthUser.getAttribute("email");
+                userInfoResponse.setEmail(email);
+                User user = userService.getUserByEmail(userInfoResponse.getEmail());
+                userInfoResponse.setNickname(user.getNickname());
+                userInfoResponse.setRole(user.getRole().name());
+                userInfoResponse.setPicture(user.getPicture());
+                return ResponseEntity.ok(userInfoResponse);
+            }
+        }
+        return ResponseEntity.badRequest().build();
     }
 }

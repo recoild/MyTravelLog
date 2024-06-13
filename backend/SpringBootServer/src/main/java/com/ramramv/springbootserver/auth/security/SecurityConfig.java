@@ -20,15 +20,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.ramramv.springbootserver.auth.service.OAuth2UserService;
+import com.ramramv.springbootserver.auth.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final OAuth2UserService oAuth2UserService;
+    private final UserService oAuth2UserService;
 
-    public SecurityConfig(OAuth2UserService oAuth2UserService) {
+    public SecurityConfig(UserService oAuth2UserService) {
         this.oAuth2UserService = oAuth2UserService;
     }
 
@@ -49,6 +49,7 @@ public class SecurityConfig {
             c.userInfoEndpoint(userInfo -> userInfo
                     .userService(oAuth2UserService));
             c.defaultSuccessUrl("/home", true);
+
         });
 
         http.authorizeHttpRequests((auth) -> auth

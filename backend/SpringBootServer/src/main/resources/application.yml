@@ -12,14 +12,14 @@ spring:
                 format-sql: true
         show-sql: true
         hibernate:
-            ddl-auto: create
+            ddl-auto: none
     data:
         redis:
             host: localhost
             port: 6379
     session:
         redis:
-            flush-mode: immediate
+            flush-mode: on-save
             namespace: spring:session
     security:
         oauth2:
