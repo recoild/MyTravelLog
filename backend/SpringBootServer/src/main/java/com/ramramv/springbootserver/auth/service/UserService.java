@@ -15,6 +15,9 @@ import com.ramramv.springbootserver.auth.entity.Role;
 import com.ramramv.springbootserver.auth.entity.User;
 import com.ramramv.springbootserver.auth.jpa.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
@@ -28,6 +31,7 @@ public class UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        log.debug("loadUser");
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -54,6 +58,7 @@ public class UserService extends DefaultOAuth2UserService {
             userRepository.save(existUser);
         }
 
+        log.debug("loadUser done");
         return oAuth2User;
 
     }

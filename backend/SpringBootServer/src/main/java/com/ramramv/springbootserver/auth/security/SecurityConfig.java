@@ -45,15 +45,14 @@ public class SecurityConfig {
         // c.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         http.oauth2Login(c -> {
-            c.loginPage("/");
+            c.loginPage("/noauth");
             c.userInfoEndpoint(userInfo -> userInfo
                     .userService(oAuth2UserService));
-            c.defaultSuccessUrl("/home", true);
-
         });
 
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/", "/login**", "/error").permitAll()
+                .requestMatchers("/", "/noauth", "/session", "/login**", "/error", "/v3/api-docs/**", "/swagger-ui/**")
+                .permitAll()
                 .anyRequest().authenticated());
 
         return http.build();

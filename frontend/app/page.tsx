@@ -3,6 +3,7 @@ import { Contents } from "@/components/index/Contents";
 import GridPattern from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 async function fetchSessionInfo(sessionValue: string) {
     console.log("SESSION", sessionValue);
@@ -25,12 +26,6 @@ async function fetchSessionInfo(sessionValue: string) {
 }
 
 export default async function Home() {
-    // return (
-    //     <>
-    //         <p>hello</p>
-    //     </>
-    // );
-
     const cookieStore = cookies();
     let sessionInfo = "";
     try {
@@ -39,8 +34,13 @@ export default async function Home() {
             throw new Error("No session cookie found");
         }
         sessionInfo = await fetchSessionInfo(SESSION?.value as string);
+        console.log("SESSION INFO", sessionInfo);
     } catch (error) {
-        console.error("Failed to fetch session info", error);
+        console.error("err", error);
+    }
+
+    if (sessionInfo) {
+        redirect("/onboarding");
     }
 
     return (
